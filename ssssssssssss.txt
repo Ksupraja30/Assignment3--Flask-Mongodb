@@ -1,0 +1,151 @@
+Step Explanation
+We need a Flask app that:
+Reads data from a backend file (data.json).
+Returns it as JSON when /api is accessed.
+
+Code (app.py)
+------------------------
+from flask import Flask, jsonify, request, render_template, redirect
+import json
+from pymongo import MongoClient
+
+app = Flask(__name__)
+
+# API route
+@app.route('/api')
+def api():
+    with open('data.json') as f:
+        data = json.load(f)
+    return jsonify(data)
+
+# MongoDB Atlas connection
+client = MongoClient("your_mongodb_atlas_connection_string")
+db = client['mydb']
+collection = db['submissions']
+
+# Form route
+@app.route('/form')
+def form():
+    return render_template('form.html')
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    try:
+        name = request.form['name']
+        email = request.form['email']
+        collection.insert_one({'name': name, 'email': email})
+        return redirect('/success')
+    except Exception as e:
+        return render_template('form.html', error=str(e))
+
+@app.route('/success')
+def success():
+    return render_template('success.html')
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+------------------------------------------------------------------------
+Backend file
+----------------
+
+[
+  {"id": 1, "name": "Alice"},
+  {"id": 2, "name": "Bob"}
+]
+
+---------------------------------------------------------------------
+Part 2: Frontend Form
+templates/form.html
+--------------------
+
+<form method="POST" action="/submit">
+  <input type="text" name="name" placeholder="Enter name" required>
+  <input type="email" name="email" placeholder="Enter email" required>
+  <button type="submit">Submit</button>
+  {% if error %}
+    <p style="color:red;">{{ error }}</p>
+  {% endif %}
+</form>
+----------------------------
+templates/success.html
+
+html
+<h2>Data submitted successfully</h2>
+--------------------------------------------------
+🔹 Part 3: Running the Application
+Commands
+bash
+# Install dependencies
+pip install flask pymongo
+
+# Run Flask app
+python app.py
+Access API: http://127.0.0.1:5000/api
+
+Access Form: http://127.0.0.1:5000/form
+--------------------------------------------------
+🔹 Part 4: GitHub Workflow
+Commands
+bash
+
+# Initialize repo
+git init
+git remote add origin git@github.com:<username>/flask-mongo-assignment.git
+
+# Create branch
+git checkout -b Venkata
+
+# Add files
+git add .
+git commit -m "Initial Flask project with API and form"
+git push origin Venkata
+
+# Merge into main
+git checkout main
+git merge Venkata
+git push origin main
+--------------------------------------------------
+🔹 Submission Guidelines (Google Doc / Word)
+Document Structure
+Title Page
+
+Assignment Name
+Your Name
+Date
+
+Step-by-Step Explanation
+
+Repository creation (screenshot of GitHub repo).
+Cloning via SSH (terminal screenshot).
+Flask app code (paste snippets).
+JSON file screenshot.
+Form page screenshot.
+Success page screenshot.
+
+Git Commands
+
+Show branch creation, commits, merges (terminal screenshots).
+
+Testing
+
+Screenshot of /api route in browser.
+Screenshot of form submission success.
+Screenshot of error handling.
+
+Final Deliverables
+
+GitHub Repo Link: [Insert here]
+Google Doc Link: [Insert here]
+
+
+
+
+
+
+
+
+
+
+
+
