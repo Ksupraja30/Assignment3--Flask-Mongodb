@@ -1,8 +1,3 @@
-Step Explanation
-We need a Flask app that:
-Reads data from a backend file (data.json).
-Returns it as JSON when /api is accessed.
-
 Code (app.py)
 ------------------------
 from flask import Flask, jsonify, request, render_template, redirect
@@ -50,15 +45,16 @@ Backend file
 ----------------
 
 [
-  {"id": 1, "name": "Alice"},
-  {"id": 2, "name": "Bob"}
+  {"id": 1, "name": "Supraja"},
+  {"id": 2, "name": "Harsha"}
+  {"id": 2, "name": "Shanvika"}
 ]
 
 ---------------------------------------------------------------------
-Part 2: Frontend Form
-templates/form.html
---------------------
 
+2: Frontend Form
+templates/form.html
+-----------------------
 <form method="POST" action="/submit">
   <input type="text" name="name" placeholder="Enter name" required>
   <input type="email" name="email" placeholder="Enter email" required>
@@ -73,8 +69,7 @@ templates/success.html
 html
 <h2>Data submitted successfully</h2>
 --------------------------------------------------
-🔹 Part 3: Running the Application
-Commands
+Running the Application, Commands
 bash
 # Install dependencies
 pip install flask pymongo
@@ -82,13 +77,10 @@ pip install flask pymongo
 # Run Flask app
 python app.py
 Access API: http://127.0.0.1:5000/api
-
 Access Form: http://127.0.0.1:5000/form
 --------------------------------------------------
-🔹 Part 4: GitHub Workflow
-Commands
+4: GitHub Workflow
 bash
-
 # Initialize repo
 git init
 git remote add origin git@github.com:<username>/flask-mongo-assignment.git
@@ -106,16 +98,6 @@ git checkout main
 git merge Venkata
 git push origin main
 --------------------------------------------------
-🔹 Submission Guidelines (Google Doc / Word)
-Document Structure
-Title Page
-
-Assignment Name
-Your Name
-Date
-
-Step-by-Step Explanation
-
 Repository creation (screenshot of GitHub repo).
 Cloning via SSH (terminal screenshot).
 Flask app code (paste snippets).
