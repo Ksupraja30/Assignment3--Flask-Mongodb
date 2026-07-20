@@ -22,10 +22,18 @@ def form():
             return redirect(url_for('success'))
 
         except Exception as e:
-            return f"Error: {e}"
+            return render_template(
+                'form.html',
+                error=str(e)
+            )
 
     return render_template('form.html')
 
+
 @app.route('/success')
 def success():
-    return "Data submitted successfully"
+    return render_template('success.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
